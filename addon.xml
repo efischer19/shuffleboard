@@ -3,8 +3,10 @@
     <requires>
         <import addon="xmbc.python" version="2.20.0"/>
     </requires>
-    <extension point="xbmc.addon.metadata">
+    <extension point="xbmc.python.script" library="shuffleboard.py">
         <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
         <summary lang="en">Because I never want to choose an episode myself</summary>
         <description lang="en">Mindlessly flip between several pre-selected shows playing on "shuffle all" mode</description>
         <platform>all</platform>
