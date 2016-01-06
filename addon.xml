@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id=script.shuffleboard name="Shuffleboard" version="0.0.0" provider="Eric Fischer">
+    <requires>
+        <import addon="xmbc.python" version="2.20.0"/>
+    </requires>
+    <extension point="xbmc.addon.metadata">
+        <provides>executable</provides>
+        <summary lang="en">Because I never want to choose an episode myself</summary>
+        <description lang="en">Mindlessly flip between several pre-selected shows playing on "shuffle all" mode</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>The MIT License (MIT) Copyright (c) 2016 Eric Fischer</license>
+        <source>https://github.com/efischer19/shuffleboard</source>
+        <forum></forum>
+        <website></website>
+        <email></email>
+    </extension>
+</addon>
