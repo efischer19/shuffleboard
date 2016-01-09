@@ -2,6 +2,7 @@ import xbmcaddon
 import xbmcgui
 import xbmc
 import json
+from random import shuffle
 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
@@ -24,27 +25,27 @@ xbmc.log("{} of them, to be exact!".format(len(shows)), xbmc.LOGDEBUG)
 xbmc.log("Here's the response: {}".format(happy_endings), xbmc.LOGDEBUG)
 xbmc.log("Trying to start now...", xbmc.LOGDEBUG)
 
-playListCmd = {
+epListCmd = {
     "jsonrpc": "2.0",
-    "method": "Playlist.GetPlaylists",
-    "id": "play_happy_endings"
+    "method": "VideoLibrary.GetEpisodes",
+    "params": {"tvshowid": happy_endings["tvshowid"]},
+    "id": "epList"
 }
-raw_resp = xbmc.executeJSONRPC(json.dumps(playListCmd))
+raw_resp = xbmc.executeJSONRPC(json.dumps(epListCmd))
 xbmc.log(raw_resp, xbmc.LOGDEBUG)
+HE_eps = json.loads(raw_resp)["result"]["episodes"]
+ep_ids = [ep["episodeid"] for ep in HE_eps]
+shuffle(ep_ids)
 
 playCmd = {
     "jsonrpc": "2.0",
     "params": {
         "item": {
-            "playlistid": 1
+            "episodeid": ep_ids[0]
         },
-        "options": {
-            "repeat": "all",
-            "shuffled": True
-        }
     },
     "method": "Player.Open",
-    "id": "play_happy_endings"
+    "id": "play_episode"
 }
 raw_cmd = json.dumps(playCmd)
 xbmc.log(raw_cmd, xbmc.LOGDEBUG)
