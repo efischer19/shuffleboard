@@ -7,10 +7,32 @@ addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 
 ShowQueryCmd = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "properties": ["title"], "sort": { "order": "ascending", "method": "label" }, "id": "libTvShow" }'
-shows = xbmc.executeJSONRPC(ShowQueryCmd)
+raw_resp = xbmc.executeJSONRPC(ShowQueryCmd)
+xbmc.log(raw_resp, xbmc.LOGDEBUG)
+resp = json.loads(raw_resp)
+shows = resp["result"]["tvshows"]
+happy_endings = next(show for show in shows if show["label"] == "Happy Endings")
 
 xbmc.log("Got some shows!", xbmc.LOGDEBUG)
 xbmc.log("{} of them, to be exact!".format(len(shows)), xbmc.LOGDEBUG)
-xbmc.log("Here's the response: {}".format(json.loads(shows)), xbmc.LOGDEBUG)
+xbmc.log("Here's the response: {}".format(happy_endings), xbmc.LOGDEBUG)
+xbmc.log("Trying to start now...", xbmc.LOGDEBUG)
 
-xbmcgui.Dialog().ok(addonname, shows)
+playCmd = {
+    "jsonrpc": "2.0",
+    "params": {
+        "item": {
+            "tvshowid": happy_endings["tvshowid"]
+        },
+        "options": {
+            "repeat": "all",
+            "shuffled": True
+        }
+    },
+    "method": "Player.Open",
+    "id": "play_happy_endings"
+}
+raw_cmd = json.dumps(playCmd)
+xbmc.log(raw_cmd, xbmc.LOGDEBUG)
+raw_resp = xbmc.executeJSONRPC(raw_cmd)
+xbmc.log(raw_resp, xbmc.LOGDEBUG)
