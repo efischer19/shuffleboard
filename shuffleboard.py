@@ -6,8 +6,14 @@ import json
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 
-ShowQueryCmd = '{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "properties": ["title"], "sort": { "order": "ascending", "method": "label" }, "id": "libTvShow" }'
-raw_resp = xbmc.executeJSONRPC(ShowQueryCmd)
+ShowQueryCmd = {
+    "jsonrpc": "2.0",
+    "method": "VideoLibrary.GetTVShows",
+    "properties": ["title"],
+    "sort": { "order": "ascending", "method": "label" },
+    "id": "libTvShow"
+}
+raw_resp = xbmc.executeJSONRPC(json.dumps(ShowQueryCmd))
 xbmc.log(raw_resp, xbmc.LOGDEBUG)
 resp = json.loads(raw_resp)
 shows = resp["result"]["tvshows"]
@@ -18,11 +24,19 @@ xbmc.log("{} of them, to be exact!".format(len(shows)), xbmc.LOGDEBUG)
 xbmc.log("Here's the response: {}".format(happy_endings), xbmc.LOGDEBUG)
 xbmc.log("Trying to start now...", xbmc.LOGDEBUG)
 
+playListCmd = {
+    "jsonrpc": "2.0",
+    "method": "Playlist.GetPlaylists",
+    "id": "play_happy_endings"
+}
+raw_resp = xbmc.executeJSONRPC(json.dumps(playListCmd))
+xbmc.log(raw_resp, xbmc.LOGDEBUG)
+
 playCmd = {
     "jsonrpc": "2.0",
     "params": {
         "item": {
-            "tvshowid": happy_endings["tvshowid"]
+            "playlistid": 1
         },
         "options": {
             "repeat": "all",
