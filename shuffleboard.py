@@ -1,11 +1,16 @@
-import xbmcaddon
-import xbmcgui
 import xbmc
 import json
 from random import shuffle
+import sys
 
-addon       = xbmcaddon.Addon()
-addonname   = addon.getAddonInfo('name')
+def executeLogCommand(cmd):
+    raw_req = json.dumps(cmd)
+    xbmc.log("JSONRPC request: {}".format(raw_req), xbmc.LOGDEBUG)
+
+    raw_resp = xbmc.executeJSONRPC(raw_req)
+    xbmc.log("JSONRPC result: {}".format(raw_resp), xbmc.LOGDEBUG)
+
+    return json.loads(raw_resp)
 
 ShowQueryCmd = {
     "jsonrpc": "2.0",
@@ -14,16 +19,9 @@ ShowQueryCmd = {
     "sort": { "order": "ascending", "method": "label" },
     "id": "libTvShow"
 }
-raw_resp = xbmc.executeJSONRPC(json.dumps(ShowQueryCmd))
-xbmc.log(raw_resp, xbmc.LOGDEBUG)
-resp = json.loads(raw_resp)
-shows = resp["result"]["tvshows"]
+showsResult = executeLogCommand(ShowQueryCmd)
+shows = showsResult["result"]["tvshows"]
 happy_endings = next(show for show in shows if show["label"] == "Happy Endings")
-
-xbmc.log("Got some shows!", xbmc.LOGDEBUG)
-xbmc.log("{} of them, to be exact!".format(len(shows)), xbmc.LOGDEBUG)
-xbmc.log("Here's the response: {}".format(happy_endings), xbmc.LOGDEBUG)
-xbmc.log("Trying to start now...", xbmc.LOGDEBUG)
 
 epListCmd = {
     "jsonrpc": "2.0",
@@ -31,9 +29,8 @@ epListCmd = {
     "params": {"tvshowid": happy_endings["tvshowid"]},
     "id": "epList"
 }
-raw_resp = xbmc.executeJSONRPC(json.dumps(epListCmd))
-xbmc.log(raw_resp, xbmc.LOGDEBUG)
-HE_eps = json.loads(raw_resp)["result"]["episodes"]
+epsResult = executeLogCommand(epListCmd)
+HE_eps = epsResult["result"]["episodes"]
 ep_ids = [ep["episodeid"] for ep in HE_eps]
 shuffle(ep_ids)
 
@@ -45,9 +42,42 @@ playCmd = {
         },
     },
     "method": "Player.Open",
-    "id": "play_episode"
+    "id": "openPlayer"
 }
-raw_cmd = json.dumps(playCmd)
-xbmc.log(raw_cmd, xbmc.LOGDEBUG)
-raw_resp = xbmc.executeJSONRPC(raw_cmd)
-xbmc.log(raw_resp, xbmc.LOGDEBUG)
+playResult = executeLogCmd(playCmd)
+ep_ids.remove(ep_ids[0])
+
+playlistsCmd = {
+    "jsonrpc": "2.0",
+    "method": "Playlist.GetPlaylists",
+    "id": "getPlaylists"
+}
+playlistsResult = executeLogCmd(playlistsCmd)
+videoPlaylist = next(playlist for playlist in playlistsResult["result"] if playlist["type"] == "video")
+
+activePlayersCmd = {
+    "jsonrpc": "2.0",
+    "method": "Player.GetActivePlayers",
+    "id": "getActivePlayers"
+}
+activePlayersResult = executeLogCmd(activePlayersCmd)
+activeVideoPlayer = next(player for player in activePlayersResult["result"] if player["type"] == video)
+
+if not activeVideoPlayer and videoPlaylist:
+    xbmc.log("error! Could not get a single video player and playlist! Exiting...")
+    sys.exit()
+
+addAllEpsBatchCmd = [
+    {
+        "jsonrpc": "2.0",
+        "method": "Playlist.Add",
+        "id": "queueEp{}".format(ep_id),
+        "params": {
+            "playlistid": videoPlaylist["playlistid"],
+            "item": {
+                "episodeid": ep_id
+            }
+        }
+    } for ep_id in ep_ids
+]
+addAllEpsResult = executeLogCmd(addAllEpsBatchCmd)
