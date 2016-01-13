@@ -44,7 +44,7 @@ playCmd = {
     "method": "Player.Open",
     "id": "openPlayer"
 }
-playResult = executeLogCmd(playCmd)
+playResult = executeLogCommand(playCmd)
 ep_ids.remove(ep_ids[0])
 
 playlistsCmd = {
@@ -52,7 +52,7 @@ playlistsCmd = {
     "method": "Playlist.GetPlaylists",
     "id": "getPlaylists"
 }
-playlistsResult = executeLogCmd(playlistsCmd)
+playlistsResult = executeLogCommand(playlistsCmd)
 videoPlaylist = next(playlist for playlist in playlistsResult["result"] if playlist["type"] == "video")
 
 activePlayersCmd = {
@@ -60,8 +60,8 @@ activePlayersCmd = {
     "method": "Player.GetActivePlayers",
     "id": "getActivePlayers"
 }
-activePlayersResult = executeLogCmd(activePlayersCmd)
-activeVideoPlayer = next(player for player in activePlayersResult["result"] if player["type"] == video)
+activePlayersResult = executeLogCommand(activePlayersCmd)
+activeVideoPlayer = next(player for player in activePlayersResult["result"] if player["type"] == "video")
 
 if not activeVideoPlayer and videoPlaylist:
     xbmc.log("error! Could not get a single video player and playlist! Exiting...")
@@ -80,4 +80,4 @@ addAllEpsBatchCmd = [
         }
     } for ep_id in ep_ids
 ]
-addAllEpsResult = executeLogCmd(addAllEpsBatchCmd)
+addAllEpsResult = executeLogCommand(addAllEpsBatchCmd)
