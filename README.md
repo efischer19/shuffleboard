@@ -2,6 +2,13 @@
 
 ## A Kodi plugin for my home media center.
 
+### Installation: How I do it (YMMV)
+1. ssh into the machine I use to run Kodi
+2. (first tiem only!) clone this repo into `~/.kodi/addons/script.shuffleboard`
+3. cd into `~/.kodi/addons/script.shuffleboard`, `git pull` to get whatever updates I've made
+
+That's it. Once I have a stable (read: more than proof-of-concept) setup, I'll probably have a "stable" branch for normal use and a "development" branch for that purpose, but let's not get ahead of ourselves.
+
 ### Pre-v1 progress and plans:
 * v0.0.1 (done)
   * finds all happy endings episodes
