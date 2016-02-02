@@ -81,3 +81,14 @@ addAllEpsBatchCmd = [
     } for ep_id in ep_ids
 ]
 addAllEpsResult = executeLogCommand(addAllEpsBatchCmd)
+
+repeatAllCmd = {
+    "jsonrpc": "2.0",
+    "method": "Player.SetRepeat",
+    "params": {
+        "playerid": activeVideoPlayer,
+        "repeat": "all",
+    },
+    "id": "repeatAll"
+}
+repeatAllResult = executeLogCommand(repeatAllCmd)
