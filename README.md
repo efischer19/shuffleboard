@@ -4,7 +4,7 @@
 
 ### Installation: How I do it (YMMV)
 1. ssh into the machine I use to run Kodi
-2. (first tiem only!) clone this repo into `~/.kodi/addons/script.shuffleboard`
+2. (first time only!) clone this repo into `~/.kodi/addons/script.shuffleboard`
 3. cd into `~/.kodi/addons/script.shuffleboard`, `git pull` to get whatever updates I've made
 
 That's it. Once I have a stable (read: more than proof-of-concept) setup, I'll probably have a "stable" branch for normal use and a "development" branch for that purpose, but let's not get ahead of ourselves.
@@ -14,12 +14,13 @@ That's it. Once I have a stable (read: more than proof-of-concept) setup, I'll p
   * finds all happy endings episodes
   * shuffles that list, and queues them all
 
-* v0.0.2 (in-progress)
+* v0.0.2 (done)
   * add repeat "ON"
   * use config file to define show (still just one for now)
   * clean up repo for easy download-n-installing
 
-* v0.0.3 
+* v0.0.3 (in-progess)
+    * Cleanup release! Single script is getting large and unwieldy, need to do some refactoring now that things are working before moving on to more advanced features.
     * same net effect, but clean up code to use multiple classes, be "clean", add unit tests, etc
 
 * v0.0.4 and beyond
@@ -34,4 +35,4 @@ Might consider cutting v1.0 release at this point, we'll see.
 * allow for "N episode chunks"
 * mix shows if desired
 * resume/return to where last watching
-* more features? I'll add thigns as I think of them
+* more features? I'll add things as I think of them
