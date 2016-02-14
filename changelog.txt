@@ -13,3 +13,7 @@ v0.0.3	(2016-02-14)
  - No functional changes
  - Code refatored into Channel class, utility functions, etc
  - More clear about future of pre-v1 work
+
+v0.1	(2016-02-14)
+ - Declaring v0.0.3 to be the first minor release
+ - This is due to archutecture being decided upon, and the addon finally being more than "a hack I threw together to play Happy Endings on shuffle"

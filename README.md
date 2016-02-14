@@ -22,18 +22,19 @@ That's it. Once I have a stable (read: more than proof-of-concept) setup, I'll p
 * v0.0.3 (done)
     * Cleanup release! Single script is getting large and unwieldy, need to do some refactoring now that things are working before moving on to more advanced features
     * same net effect, but clean up code to use multiple classes, be "clean", ~~add unit tests~~, etc
+    * specify in-order vs random
     * Issues added to github page for future v0.x work items
+    * This is becoming the first minor release, v0.1
 
-* v0.0.4 and beyond
+* v0.2 and beyond
     * multiple shows in config, flip between them.
     * able to configure shows used in options menu rather than pre-defined text file
+    * resume/return to where last watching (should definitely be able to get this working)
 
 Might consider cutting v1.0 release at this point, we'll see.
 
 ### Future considerations:
-* specify in-order vs random (done)
 * show upcoming schedule somehow (doubt this happens, given the "make a playlist, queue it, then exit" shape development has taken)
 * allow for "N episode chunks"
 * mix shows if desired
-* resume/return to where last watching (should definitely be able to get this working)
 * more features? I'll add things as I think of them
