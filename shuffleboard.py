@@ -6,5 +6,5 @@ from resources.channel import (
 )
 from resources.common import *
 
-currentChannel = TvShowChannel(DEFAULT_CHANNEL)
+currentChannel = TvShowChannel(CURRENT_CHANNEL)
 playPlaylist(currentChannel.playlist)
