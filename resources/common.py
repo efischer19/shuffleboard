@@ -11,12 +11,12 @@ If a piece of code thinks it needs a new __foo__ or FOO variable, it should
 probably be declared here instead.
 """
 
-# Contextual underscore variables
-__settings__   = xbmcaddon.Addon(id='script.shuffleboard')
-__cwd__        = __settings__.getAddonInfo('path')
+# Contextual variables
+SETTINGS = xbmcaddon.Addon(id='script.shuffleboard')
+__cwd__ = SETTINGS.getAddonInfo('path')
 
 # Constants
-DEFAULT_CHANNEL = os.path.join(__cwd__, 'resources', 'channels', 'main.json')
+CURRENT_CHANNEL = os.path.join(__cwd__, 'resources', 'channels', SETTINGS.getSetting('current_channel'))
 TYPE_TV_SHOW = 'tvshow'
 
 # Common API commands

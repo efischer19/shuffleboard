@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="Current Channel">
+        <setting label="Current Channel File" id="current_channel" type="fileenum" values="resources/channels" mask=".json" default="main.json"/>
+    </category>
+    <category label="Define New Channel">
+        <setting label="Load Current Channel Definition" type="action" action="RunScript($CWD/resources/load_settings_channel.py)"/>
+        <setting type="sep"/>
+        <setting label="Type" type="labelenum" id="type" values="tvshow"/>
+        <setting label="Show Name" type="text" id="show"/>
+        <setting label="Shuffle" type="bool" id="shuffle"/>
+        <setting label="Channel Name" type="text" id="filename"/>
+        <setting label="Save Channel" type="action" action="RunScript($CWD/resources/save_settings_channel.py)"/>
+    </category>
+</settings>
